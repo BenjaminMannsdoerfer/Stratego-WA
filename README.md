@@ -59,7 +59,7 @@ You can see screenshots of the GUI below:
 
 ## Contributors
 
-[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/saschaivan/Stratego-SA/graphs/contributors)
+
 
 ## Disclaimer
 
