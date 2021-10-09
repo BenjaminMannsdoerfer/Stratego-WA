@@ -12,7 +12,8 @@ trait MatchFieldInterface {
   def figureVal(row: Int, col: Int): Int
   def legend:String
   def frame(row:Int):String
-  def createNewMatchField:MatchFieldInterface
+  def createNewMatchfieldSize(size:Int):MatchFieldInterface
+  def addWater(row:Int, col: Int): MatchFieldInterface
 }
 
 trait FieldInterface{

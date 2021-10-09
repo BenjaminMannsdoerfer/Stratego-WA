@@ -210,9 +210,14 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     contents += new Menu("File") {
       foreground = new Color(73,82,89)
       mnemonic = Key.F
-      contents += new MenuItem(Action("New Game") {
-        foreground = new Color(73,82,89)
-        controller.createEmptyMatchfield(matchFieldSize)
+      contents += new MenuItem(Action("New Game 4x4") {
+        controller.createNewMatchfieldSize(4)
+      })
+      contents += new MenuItem(Action("New Game 7x7") {
+        controller.createNewMatchfieldSize(7)
+      })
+      contents += new MenuItem(Action("New Game 10x10") {
+        controller.createNewMatchfieldSize(10)
       })
       contents += new MenuItem(Action("Quit") {
         foreground = new Color(73,82,89)

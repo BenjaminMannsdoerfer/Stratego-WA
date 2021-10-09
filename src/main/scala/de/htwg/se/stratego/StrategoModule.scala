@@ -11,7 +11,7 @@ import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
 
 class StrategoModule extends AbstractModule with ScalaModule {
 
-  val defaultSize:Int = 4
+  val defaultSize:Int = 10
   val defaultSet:Boolean = false
 
   override def configure():Unit = {
@@ -21,9 +21,9 @@ class StrategoModule extends AbstractModule with ScalaModule {
     bind[MatchFieldInterface].to[MatchField]
     bind[ControllerInterface].to[controller.controllerComponent.controllerBaseImpl.Controller]
 
-    bind[MatchFieldInterface].annotatedWithName("tiny").toInstance(new MatchField(defaultSize, defaultSize, defaultSet))
-    bind[MatchFieldInterface].annotatedWithName("small").toInstance(new MatchField(6, 6, defaultSet))
-    bind[MatchFieldInterface].annotatedWithName("normal").toInstance(new MatchField(10, 10, defaultSet))
+    bind[MatchFieldInterface].annotatedWithName("tiny").toInstance(new MatchField(4, 4, defaultSet))
+    bind[MatchFieldInterface].annotatedWithName("small").toInstance(new MatchField(7, 7, defaultSet))
+    bind[MatchFieldInterface].annotatedWithName("normal").toInstance(new MatchField(defaultSize, defaultSize, defaultSet))
 
     bind[FileIOInterface].to[FileIO]
 

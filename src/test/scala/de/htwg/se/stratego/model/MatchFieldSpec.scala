@@ -11,7 +11,7 @@ class MatchFieldSpec extends WordSpec with Matchers {
       matchField.fields should be(matchField.fields)
     }
     "can create a new matchfield" in {
-      matchField.createNewMatchField.toString should be(matchField.createNewMatchField.toString)
+      matchField.createNewMatchfieldSize(4).toString should be(matchField.createNewMatchfieldSize(4).toString)
     }
 
   }

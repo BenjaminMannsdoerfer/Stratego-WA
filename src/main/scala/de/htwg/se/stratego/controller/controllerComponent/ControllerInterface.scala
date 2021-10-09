@@ -12,7 +12,6 @@ trait ControllerInterface extends Publisher {
   def handle(input:String):String
   def welcome:String
   def setPlayers(input:String):String
-  def createEmptyMatchfield(size:Int):String
   def initMatchfield:String
   def attack(rowA:Int, colA:Int, rowD:Int, colD:Int): String
   def set(row:Int, col:Int, charac:String):String
@@ -32,6 +31,7 @@ trait ControllerInterface extends Publisher {
   def load:String
   def save:String
   def exit:String
+  def createNewMatchfieldSize(size:Int):String
 }
 
 
@@ -44,6 +44,8 @@ class PlayerChanged extends Event
 class MachtfieldInitialized extends Event
 class GameFinished extends Event
 class PlayerSwitch extends Event
+case class MatchfieldSizeChanged(size: Int) extends Event
+
 
 
 

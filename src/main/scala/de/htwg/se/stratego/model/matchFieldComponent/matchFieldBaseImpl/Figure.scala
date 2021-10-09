@@ -16,4 +16,5 @@ object Figure extends Enumeration {
   val Scout = FigureVal("2", 2)
   val Spy = FigureVal("1", 1)
   val Flag = FigureVal("F", 0)
+  val Water = FigureVal("~", 12)
 }

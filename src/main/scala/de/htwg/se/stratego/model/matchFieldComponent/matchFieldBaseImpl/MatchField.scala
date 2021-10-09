@@ -19,15 +19,19 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
 
   def figureVal(row: Int, col: Int): Int = fields.field(row, col).character.get.figure.value
 
+  def addWater(row: Int, col: Int): MatchField = copy(fields.updateField(row,col, Field(false, Some(GameCharacter(Figure.Water)), None)))
+
   def legend():String = {
     val welcome = "**********  STRATEGO  **********\n\n"
-    val n = "n:   create a new empty machtfield\n"
-    val i = "n:   set all figures automatically\n"
-    val s = "s:   set one figure with the format \"s row col figure\"\n"
-    val z = "z:   undo\n"
-    val y = "y:   redo\n"
-    val q = "q:   quit the programm\n"
-    welcome + n + i + s + z + y + q
+    val four =  "4:   create new matchfield with size 4x4\n"
+    val seven = "7:   create new matchfield with size 7x7\n"
+    val ten =   "10:  create new matchfield with size 10x10\n"
+    val i =     "i:   set all figures automatically\n"
+    val s =     "s:   set one figure with the format \"s row col figure\"\n"
+    val z =     "z:   undo\n"
+    val y =     "y:   redo\n"
+    val q =     "q:   quit the programm\n"
+    welcome + four + seven + ten + i + s + z + y + q
   }
 
   def frame(row:Int): String = {
@@ -37,7 +41,7 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
     combine
   }
 
-  def createNewMatchField: MatchFieldInterface = new MatchField(fields.matrixSize,fields.matrixSize,false)
+  def createNewMatchfieldSize(size:Int): MatchFieldInterface = new MatchField(size,size,false)
 
   override def toString:String = {
     val pipe = "|"

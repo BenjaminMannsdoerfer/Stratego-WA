@@ -37,6 +37,22 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     state.handle(input)
   }
 
+  override def createNewMatchfieldSize(size:Int): String = {
+    matchField.size match {
+      case 4 => matchField = injector.instance[MatchFieldInterface](Names.named("tiny"))
+      case 7 => matchField = injector.instance[MatchFieldInterface](Names.named("small"))
+      case 10 => matchField = injector.instance[MatchFieldInterface](Names.named("normal"))
+      case _ =>
+    }
+    matchField = matchField.createNewMatchfieldSize(size)
+    game = game.copy(Player("PlayerBlue", list.copy(size).getCharacterList()), Player("PlayerRed", list.copy(size).getCharacterList()), size, new MatchField(size, size, false))
+    gameStatus=NEW
+    state = EnterPlayer(this)
+    publish(new NewGame)
+    currentPlayerIndex=0
+    "created new matchfield\nPlease enter the names like (player1 player2)"
+  }
+
   def welcome():String = {
     "Welcome to STRATEGO! " +
       "Please enter first name of Player1 and then of Player2 like (player1 player2)!"
@@ -66,15 +82,6 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     }
   }
 
-  def createEmptyMatchfield(size:Int): String = {
-    game = game.copy(Player("PlayerBlue", list.getCharacterList()), Player("PlayerRed", list.getCharacterList()), size, new MatchField(size, size, false))
-    gameStatus=NEW
-    state = EnterPlayer(this)
-    publish(new NewGame)
-    currentPlayerIndex=0
-    "created new matchfield\nPlease enter the names like (player1 player2)"
-  }
-
   def initMatchfield(): String = {
     var newMatchField = matchField
     newMatchField = game.init(matchField, 0, 0, 0).matchField
@@ -85,7 +92,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       gameStatus=INIT
       nextState
       publish(new MachtfieldInitialized)
-      playerList(currentPlayerIndex) + " it's your turn!"
+      playerListBuffer(currentPlayerIndex) + " it's your turn!"
     }
   }
 
@@ -96,7 +103,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       publish(new GameFinished)
       currentPlayerIndex=1
       nextState
-      createEmptyMatchfield(game.matchField.fields.matrixSize)
+      createNewMatchfieldSize(game.matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
@@ -104,7 +111,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       publish(new GameFinished)
       currentPlayerIndex=1
       nextState
-      createEmptyMatchfield(matchField.fields.matrixSize)
+      createNewMatchfieldSize(matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
@@ -152,7 +159,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
         publish(new GameFinished)
         currentPlayerIndex=1
         nextState
-        createEmptyMatchfield(game.matchField.size)
+        createNewMatchfieldSize(game.matchField.size)
         return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
           "Game finished! Play new Game with (n)!"
       }
