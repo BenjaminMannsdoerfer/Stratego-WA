@@ -174,32 +174,6 @@ case class Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFi
         case true if attackEqualsDefense => return strategy8
       }
       matchField
-
-      // TODO match statt if
-      // is field set
-      /*if (matchField.fields.field(rowA, colA).isSet.equals(false) || matchField.fields.field(rowD, colD).isSet.equals(false)) return strategy1
-      // is attack valid
-      if (matchField.fields.field(rowD, colD).colour.get.value == currentPlayerIndex &&
-        matchField.fields.field(rowA, colA).colour.get.value == currentPlayerIndex) return strategy1
-      // is enemy attack invalid
-      if (matchField.fields.field(rowD, colD).colour.get.value != currentPlayerIndex &&
-        matchField.fields.field(rowA, colA).colour.get.value != currentPlayerIndex) return strategy1
-      // is player attack wrong
-      if (matchField.fields.field(rowD, colD).colour.get.value == currentPlayerIndex &&
-        matchField.fields.field(rowA, colA).colour.get.value != currentPlayerIndex) return strategy1
-      // is attack far away
-      if (((Math.abs(rowA - rowD) > 1) || (Math.abs(colA - colD) > 1)) || ((Math.abs(rowA - rowD) == 1) && (Math.abs(colA - colD) == 1))) return strategy1
-      // does the miner attack bomb
-      if (figureHasValue(matchField, rowA, colA) == 3 && figureHasValue(matchField, rowD, colD) == 11) return strategy6
-      // does the spy attack marshal
-      if ((figureHasValue(matchField, rowA, colA) == 1) && (figureHasValue(matchField, rowD, colD) == 10)) return strategy3
-      // is defense stronger
-      if (figureHasValue(matchField, rowA, colA) < figureHasValue(matchField, rowD, colD)) return strategy7
-      // is attack stronger
-      if (figureHasValue(matchField, rowA, colA) > figureHasValue(matchField, rowD, colD)) return strategy3
-      // does attack equal defense
-      if (figureHasValue(matchField, rowA, colA) == figureHasValue(matchField, rowD, colD)) return strategy8
-      matchField*/
     }
   }
 

@@ -33,7 +33,6 @@ class FileIO extends FileIOInterface{
     val source:String = Source.fromFile("matchField.json").getLines().mkString
     val json: JsValue = Json.parse(source)
     val sizeOfMatchfield: Int = (json \ "matchField").as[JsArray].value.size
-    println(sizeOfMatchfield)
     val injector = Guice.createInjector(new StrategoModule)
     var matchField = injector.getInstance(classOf[MatchFieldInterface])
     sizeOfMatchfield match {

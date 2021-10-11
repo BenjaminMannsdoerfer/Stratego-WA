@@ -11,7 +11,7 @@ object GameStatus extends Enumeration {
     UNDO -> "Undo last step",
     REDO -> "Redo last step",
     NEW -> "Created new Game",
-    INIT -> "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n",
+    INIT -> "Move Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n",
     ATTACK -> "enemy attacked"
   )
 

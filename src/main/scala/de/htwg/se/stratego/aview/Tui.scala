@@ -6,7 +6,6 @@ import scala.swing.Reactor
 
 class Tui(controller: ControllerInterface) extends Reactor {
   listenTo(controller)
-  val size = controller.getSize
 
   def processInputLine(input: String):String = {
     input match {

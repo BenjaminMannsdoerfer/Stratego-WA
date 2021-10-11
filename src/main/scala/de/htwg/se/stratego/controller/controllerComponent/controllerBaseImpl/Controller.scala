@@ -54,8 +54,8 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   }
 
   def welcome():String = {
-    "Welcome to STRATEGO! " +
-      "Please enter first name of Player1 and then of Player2 like (player1 player2)!"
+    "Welcome to STRATEGO!\n" +
+      "Please enter first name of Player1 and then of Player2 like (player1 player2)!\n"
   }
 
   def setPlayers(input: String): String = {

@@ -19,7 +19,7 @@ object Stratego {
     println("Enter the player names in the format \"Player1 Player2\"")
     do {
       input = readLine()
-      println(tui.processInputLine(input))
+      println(tui.processInputLine(input) + "\n")
     } while (!input.equals("q"))
   }
 }

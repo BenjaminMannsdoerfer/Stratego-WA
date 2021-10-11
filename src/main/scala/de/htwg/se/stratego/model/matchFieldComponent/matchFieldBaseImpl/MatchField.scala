@@ -60,7 +60,7 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
           matchField += "|  " + "\033[0;31m" + fields.field(row,col) + Console.RESET + "  "
         }
       } else if (fields.isWater(row, col)){
-        matchField += "|  " + fields.field(row,col) + "  "
+        matchField += "|  " + "~" + "  "
       } else {
         matchField += "|     "
       }
