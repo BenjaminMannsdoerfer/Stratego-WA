@@ -101,7 +101,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFi
 
   def fieldIsInMatchfield(rowD:Int, colD:Int): Boolean = rowD <= this.matchField.size - 1 && rowD >= 0 && colD >= 0 && colD <= this.matchField.size - 1
 
-  def flagFound(rowD: Int, colD: Int, rowA: Int, colA: Int, currentPlayerIndex: Int): Boolean = {
+  def flagFound(rowA: Int, colA: Int, rowD: Int, colD: Int, currentPlayerIndex: Int): Boolean = {
     if (fieldIsInMatchfield(rowD, colD) && this.matchField.fieldIsSet(rowA, colA).equals(true) && this.matchField.fieldIsSet(rowD, colD).equals(true)
       && this.matchField.fieldColor(rowD, colD) != currentPlayerIndex &&
       this.matchField.figureVal(rowD, colD) == 0) true else false

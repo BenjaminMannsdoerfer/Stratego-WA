@@ -107,7 +107,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
-    if(game.flagFound(rowD, colD, rowA, rowD, currentPlayerIndex)) {
+    if(game.flagFound(rowA, colA, rowD, colD, currentPlayerIndex)) {
       publish(new GameFinished)
       currentPlayerIndex=1
       nextState
