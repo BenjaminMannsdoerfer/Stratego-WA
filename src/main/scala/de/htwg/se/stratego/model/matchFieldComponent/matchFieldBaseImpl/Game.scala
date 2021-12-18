@@ -111,7 +111,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFi
     if (fieldIsInMatchfield(rowD, colD) && !matchField.fields.isWater(rowD, colD) && !matchField.fields.isWater(rowA, colA) &&
       this.matchField.fieldIsSet(rowA, colA) && this.matchField.fieldColor(rowA, colA) == currentPlayerIndex
       && this.matchField.fieldIsSet(rowD, colD) && this.matchField.fieldColor(rowD, colD) != currentPlayerIndex
-      && !isFlagOrBomb(matchField, rowA, colA))
+      && !isFlagOrBomb(matchField, rowA, colA) && !attackEnemyToFarAway(rowA, colA, rowD, colD))
       true else false
   }
 
@@ -145,6 +145,9 @@ case class Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFi
   def isFlagOrBomb(matchField: MatchFieldInterface, row: Int, col: Int): Boolean = if (matchField.fields.field(row, col).character.get.figure.value == 0 ||
     matchField.fields.field(row, col).character.get.figure.value == 11) true else false
 
+  def attackEnemyToFarAway(rowA: Int, colA: Int, rowD: Int, colD: Int): Boolean = if(((Math.abs(rowA - rowD) > 1) || (Math.abs(colA - colD) > 1)) ||
+    ((Math.abs(rowA - rowD) == 1) && (Math.abs(colA - colD) == 1))) true else false
+
   object Context extends Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFieldInterface) {
     def attack(matchField: MatchFieldInterface, rowA: Int, colA: Int, rowD: Int, colD: Int, currentPlayerIndex: Int): MatchFieldInterface = {
       def strategy1: MatchFieldInterface = matchField
@@ -154,13 +157,13 @@ case class Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFi
       def strategy7: MatchFieldInterface = matchField.removeChar(rowA, colA)
       def strategy8: MatchFieldInterface = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
       val fieldIsNotSet = matchField.fields.field(rowA, colA).isSet.equals(false) || matchField.fields.field(rowD, colD).isSet.equals(false)
+      val attackToFarAway = ((Math.abs(rowA - rowD) > 1) || (Math.abs(colA - colD) > 1)) || ((Math.abs(rowA - rowD) == 1) && (Math.abs(colA - colD) == 1))
       val attackOwnFigures = matchField.fields.field(rowD, colD).colour.get.value == currentPlayerIndex &&
         matchField.fields.field(rowA, colA).colour.get.value == currentPlayerIndex
       val enemyAttack = matchField.fields.field(rowD, colD).colour.get.value != currentPlayerIndex &&
         matchField.fields.field(rowA, colA).colour.get.value != currentPlayerIndex
       val wrongPlayerAttack = matchField.fields.field(rowD, colD).colour.get.value == currentPlayerIndex &&
         matchField.fields.field(rowA, colA).colour.get.value != currentPlayerIndex
-      val attackToFarAway = ((Math.abs(rowA - rowD) > 1) || (Math.abs(colA - colD) > 1)) || ((Math.abs(rowA - rowD) == 1) && (Math.abs(colA - colD) == 1))
       val minerAttackBomb = figureHasValue(matchField, rowA, colA) == 3 && figureHasValue(matchField, rowD, colD) == 11
       val spyAttackMarshal = (figureHasValue(matchField, rowA, colA) == 1) && (figureHasValue(matchField, rowD, colD) == 10)
       val defenseIsStronger = figureHasValue(matchField, rowA, colA) < figureHasValue(matchField, rowD, colD)

@@ -90,6 +90,8 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     } else {
       game = game.copy(matchField = game.init(matchField, 0, 0, 0).matchField)
       gameStatus=INIT
+      game.bList.clear()
+      game.rList.clear()
       nextState
       publish(new MachtfieldInitialized)
       playerListBuffer(currentPlayerIndex) + " it's your turn!"
@@ -104,15 +106,19 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       currentPlayerIndex=1
       nextState
       createNewMatchfieldSize(game.matchField.fields.matrixSize)
-      return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
+      gameStatus=WON
+      return "Congratulations " + playerListBuffer(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
     if(game.flagFound(rowA, colA, rowD, colD, currentPlayerIndex)) {
+      //currentPlayerIndex=1
+      //nextState
+      //createNewMatchfieldSize(matchField.fields.matrixSize)
+      game = game.copy(matchField = game.Context.attack(game.matchField, rowA, colA, rowD, colD,currentPlayerIndex))
+      publish(new FieldChanged)
+      gameStatus=WON
       publish(new GameFinished)
-      currentPlayerIndex=1
-      nextState
-      createNewMatchfieldSize(matchField.fields.matrixSize)
-      return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
+      return "Congratulations " + playerListBuffer(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
     if (game.attackValid(rowD, colD, rowA, colA, currentPlayerIndex)) {
@@ -144,7 +150,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     publish(new FieldChanged)
     if(game.rList.size == 0){
         return "Move Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
-        playerList(currentPlayerIndex) + " it's your turn!"
+        playerListBuffer(currentPlayerIndex) + " it's your turn!"
     }
     if(game.bList.size == 0){
       return ""
@@ -160,7 +166,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
         currentPlayerIndex=1
         nextState
         createNewMatchfieldSize(game.matchField.size)
-        return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
+        return "Congratulations " + playerListBuffer(currentPlayerIndex) +"! You're the winner!\n" +
           "Game finished! Play new Game with (n)!"
       }
       undoManager.doStep(new MoveCommand(dir, game.matchField, row, col, currentPlayerIndex, this))
